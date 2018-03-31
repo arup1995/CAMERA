@@ -20,6 +20,19 @@ import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import java.io.File;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+
 public class MainActivity extends AppCompatActivity {
     private static final int CAMERA_REQUEST = 1;
     private static final int PICK_FROM_GALLERY = 2;
@@ -29,13 +42,17 @@ public class MainActivity extends AppCompatActivity {
     ImageView mimageView;
     private int RESULT_LOAD_IMAGE = 2;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mCapture = (Button) findViewById(R.id.btn_camera);
         mGallery = (Button) findViewById(R.id.btn_gallery);
+
         mimageView = (ImageView) findViewById(R.id.imageView);
+
+
         mCapture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -123,11 +140,11 @@ public class MainActivity extends AppCompatActivity {
             int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
             String picturePath = cursor.getString(columnIndex);
             cursor.close();
-
             mimageView.setImageBitmap(BitmapFactory.decodeFile(picturePath));
         } else if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
             Bitmap bmp = (Bitmap) data.getExtras().get("data");
             mimageView.setImageBitmap(bmp);
+
 
         }
     }
