@@ -277,32 +277,32 @@ public class MainActivity extends AppCompatActivity {
 
     public void uploadImage(final Bitmap bitmapImage, String currentPhotoPath) {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        bitmapImage.compress(Bitmap.CompressFormat.JPEG, 20, out);
+        bitmapImage.compress(Bitmap.CompressFormat.JPEG, 100, out);
         Bitmap compressedBitmap = BitmapFactory.decodeStream(new ByteArrayInputStream(out.toByteArray()));
-        Bitmap resizedBitmap = getResizedBitmap(compressedBitmap, compressedBitmap.getWidth() / 8, compressedBitmap.getHeight() / 8);
+       // Bitmap resizedBitmap = getResizedBitmap(compressedBitmap, compressedBitmap.getWidth() / 8, compressedBitmap.getHeight() / 8);
         byte imgBytes[] = out.toByteArray();
         RequestBody requestFile =
                 RequestBody.create(MediaType.parse("image/jpeg"), imgBytes);
         MultipartBody.Part body =
                 MultipartBody.Part.createFormData("image", currentPhotoPath, requestFile);
-        mimageView.setImageBitmap(resizedBitmap);
+       // mimageView.setImageBitmap(resizedBitmap);
     }
 
-    public Bitmap getResizedBitmap(Bitmap bm, int newWidth, int newHeight) {
-        int width = bm.getWidth();
-        int height = bm.getHeight();
-        float scaleWidth = ((float) newWidth) / width;
-        float scaleHeight = ((float) newHeight) / height;
-        // CREATE A MATRIX FOR THE MANIPULATION
-        Matrix matrix = new Matrix();
-        // RESIZE THE BIT MAP
-        matrix.postScale(scaleWidth, scaleHeight);
-
-        // "RECREATE" THE NEW BITMAP
-        Bitmap resizedBitmap = Bitmap.createBitmap(
-                bm, 0, 0, width, height, matrix, false);
-        bm.recycle();
-        return resizedBitmap;
-    }
+//    public Bitmap getResizedBitmap(Bitmap bm, int newWidth, int newHeight) {
+//        int width = bm.getWidth();
+//        int height = bm.getHeight();
+//        float scaleWidth = ((float) newWidth) / width;
+//        float scaleHeight = ((float) newHeight) / height;
+//        // CREATE A MATRIX FOR THE MANIPULATION
+//        Matrix matrix = new Matrix();
+//        // RESIZE THE BIT MAP
+//        matrix.postScale(scaleWidth, scaleHeight);
+//
+//        // "RECREATE" THE NEW BITMAP
+//        Bitmap resizedBitmap = Bitmap.createBitmap(
+//                bm, 0, 0, width, height, matrix, false);
+//        bm.recycle();
+//        return resizedBitmap;
+//    }
 }
 
